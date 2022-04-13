@@ -1,6 +1,6 @@
-package com.tw.game.game
+package com.tw.core.game
 
-import com.tw.game.player.Player
+import com.tw.core.player.Player
 
 interface ConsolePrinter {
 

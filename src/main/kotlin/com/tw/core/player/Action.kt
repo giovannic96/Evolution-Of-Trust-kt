@@ -1,4 +1,4 @@
-package com.tw.game.player
+package com.tw.core.player
 
 enum class Action {
     CHEAT,

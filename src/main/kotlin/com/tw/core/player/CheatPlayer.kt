@@ -1,12 +1,12 @@
-package com.tw.game.player
+package com.tw.core.player
 
-class CoolPlayer(
+class CheatPlayer(
     name: String,
     score: Int
 ) :
     AbstractPlayer(name, score) {
 
     override fun doAction(): Action {
-        return Action.COOPERATE
+        return Action.CHEAT
     }
 }

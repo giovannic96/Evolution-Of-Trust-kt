@@ -1,7 +1,9 @@
-package com.tw.game.player
+package com.tw.core.player
 
-abstract class AbstractPlayer(private val name: String,
-                              private var score: Int) : Player {
+abstract class AbstractPlayer(
+    private val name: String,
+    private var score: Int,
+) : Player {
 
     override fun getName(): String {
         return this.name

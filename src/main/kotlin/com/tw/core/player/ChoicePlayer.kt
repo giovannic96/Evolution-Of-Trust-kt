@@ -1,6 +1,6 @@
-package com.tw.game.player
+package com.tw.core.player
 
-class ConsolePlayer(
+class ChoicePlayer(
     name: String,
     score: Int,
     private val actionReader: ActionReader

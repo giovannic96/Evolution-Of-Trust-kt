@@ -1,8 +1,6 @@
-package com.tw
+package com.tw.core.game
 
-import com.tw.game.game.ConsolePrinter
-import com.tw.game.game.GameEngine
-import com.tw.game.player.Player
+import com.tw.core.player.Player
 
 class Machine(
     private val gameEngine: GameEngine,

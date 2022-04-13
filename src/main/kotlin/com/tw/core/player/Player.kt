@@ -1,4 +1,4 @@
-package com.tw.game.player
+package com.tw.core.player
 
 interface Player {
 

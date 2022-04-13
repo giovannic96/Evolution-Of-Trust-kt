@@ -1,6 +1,6 @@
-package com.tw.game.game
+package com.tw.core.game
 
-import com.tw.game.player.Action
+import com.tw.core.player.Action
 
 class Rules {
     fun applyRules(actions: Pair<Action, Action>): Points {

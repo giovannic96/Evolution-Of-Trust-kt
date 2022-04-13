@@ -1,7 +1,7 @@
-package com.tw.peripheral
+package com.tw.io
 
-import com.tw.game.player.Action
-import com.tw.game.player.ActionReader
+import com.tw.core.player.Action
+import com.tw.core.player.ActionReader
 import java.util.*
 
 

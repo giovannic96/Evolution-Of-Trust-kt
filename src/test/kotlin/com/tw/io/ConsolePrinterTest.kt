@@ -1,7 +1,7 @@
-package com.tw.peripheral
+package com.tw.io
 
-import com.tw.game.game.ConsolePrinter
-import com.tw.game.player.CoolPlayer
+import com.tw.core.game.ConsolePrinter
+import com.tw.core.player.CoolPlayer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -12,12 +12,14 @@ import java.io.PrintStream
 
 internal class ConsolePrinterTest {
 
-    private val outputStreamCaptor = ByteArrayOutputStream()
-    private val standardOut = System.out
+    private lateinit var outputStreamCaptor: ByteArrayOutputStream
+    private lateinit var standardOut: PrintStream
     private lateinit var consolePrinter: ConsolePrinter
 
     @BeforeEach
     fun setUp() {
+        outputStreamCaptor = ByteArrayOutputStream()
+        standardOut = System.out
         consolePrinter = ConsolePrinterImpl()
         System.setOut(PrintStream(outputStreamCaptor))
     }

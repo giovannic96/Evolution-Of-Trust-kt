@@ -1,7 +1,7 @@
-package com.tw.peripheral
+package com.tw.io
 
-import com.tw.game.game.ConsolePrinter
-import com.tw.game.player.Player
+import com.tw.core.game.ConsolePrinter
+import com.tw.core.player.Player
 
 class ConsolePrinterImpl : ConsolePrinter {
 

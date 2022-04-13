@@ -1,10 +1,11 @@
 package com.tw
-import com.tw.game.game.GameEngine
-import com.tw.game.player.CheatPlayer
-import com.tw.game.player.ConsolePlayer
-import com.tw.game.player.CoolPlayer
-import com.tw.peripheral.ActionReaderImpl
-import com.tw.peripheral.ConsolePrinterImpl
+import com.tw.core.game.GameEngine
+import com.tw.core.game.Machine
+import com.tw.core.player.CheatPlayer
+import com.tw.core.player.ChoicePlayer
+import com.tw.core.player.CoolPlayer
+import com.tw.io.ActionReaderImpl
+import com.tw.io.ConsolePrinterImpl
 
 fun main(args: Array<String>) {
     val gameEngine = GameEngine()
@@ -15,9 +16,9 @@ fun main(args: Array<String>) {
     machine.playGame(3)
 }
 
-private fun getConsolePlayers(): Pair<ConsolePlayer, ConsolePlayer> {
-    val player1 = ConsolePlayer("p1", 0, ActionReaderImpl())
-    val player2 = ConsolePlayer("p2", 0, ActionReaderImpl())
+private fun getConsolePlayers(): Pair<ChoicePlayer, ChoicePlayer> {
+    val player1 = ChoicePlayer("p1", 0, ActionReaderImpl())
+    val player2 = ChoicePlayer("p2", 0, ActionReaderImpl())
 
     return Pair(player1, player2)
 }

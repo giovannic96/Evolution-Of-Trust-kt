@@ -1,7 +1,7 @@
-package com.tw.game.game
+package com.tw.core.game
 
-import com.tw.game.player.Action
-import com.tw.game.player.Player
+import com.tw.core.player.Action
+import com.tw.core.player.Player
 
 class GameEngine(private val rules: Rules = Rules()) {
 

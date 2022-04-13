@@ -1,11 +1,13 @@
-package com.tw.game
+package com.tw.core
 
-import com.tw.game.player.*
+import com.tw.core.player.*
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+
+private const val INITIAL_SCORE = 0
 
 internal class PlayerTest {
 
@@ -18,7 +20,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `update coin amount`() {
-        val player = ConsolePlayer("p1", 0, actionReader)
+        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader)
 
         player.updateScore(3)
         val expectedAmount = 3
@@ -28,7 +30,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `player one cheats`() {
-        val player = ConsolePlayer("p1", 0, actionReader)
+        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader)
 
         every { actionReader.readAction() } returns Action.CHEAT
 
@@ -37,7 +39,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `player one cooperates`() {
-        val player = ConsolePlayer("p1", 0, actionReader)
+        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader)
 
         every { actionReader.readAction() } returns Action.COOPERATE
 
@@ -46,15 +48,36 @@ internal class PlayerTest {
 
     @Test
     internal fun `cool player always cooperates`() {
-        val player = CoolPlayer("p1", 0)
+        val player = CoolPlayer("cool_player", INITIAL_SCORE)
 
         assertThat(player.doAction()).isEqualTo(Action.COOPERATE)
     }
 
     @Test
     internal fun `cheat player always cheats`() {
-        val player = CheatPlayer("p1", 0)
+        val player = CheatPlayer("cheat_player", INITIAL_SCORE)
 
         assertThat(player.doAction()).isEqualTo(Action.CHEAT)
     }
+
+    /*
+    @Test
+    internal fun `copy player collaborate then copy`() {
+        val cheatPlayer = CheatPlayer("cheat_player", INITIAL_SCORE)
+        val copyPlayer = CopyPlayer("copy_player", INITIAL_SCORE)
+
+        cheatPlayer.doAction()
+        val copyPlayerFirstAction = copyPlayer.doAction()
+
+        cheatPlayer.doAction()
+        val copyPlayerSecondAction = copyPlayer.doAction()
+
+        cheatPlayer.doAction()
+        val copyPlayerThirdAction = copyPlayer.doAction()
+
+        assertThat(copyPlayerFirstAction).isEqualTo(Action.COOPERATE)
+        assertThat(copyPlayerSecondAction).isEqualTo(Action.CHEAT)
+        assertThat(copyPlayerThirdAction).isEqualTo(Action.CHEAT)
+    }
+     */
 }
