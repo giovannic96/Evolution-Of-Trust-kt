@@ -1,6 +1,5 @@
-package com.tw.core
+package com.tw.core.game
 
-import com.tw.core.game.GameEngine
 import com.tw.core.player.Action
 import com.tw.core.player.ActionReader
 import com.tw.core.player.ChoicePlayer
@@ -23,24 +22,24 @@ internal class GameEngineTest {
 
     @Test
     internal fun `player one wins`() {
-        val player1 = ChoicePlayer("p1", 2, actionReader)
-        val player2 = ChoicePlayer("p2", 1, actionReader)
+        val player1 = ChoicePlayer("p1", 2, actionReader = actionReader)
+        val player2 = ChoicePlayer("p2", 1, actionReader = actionReader)
 
         assertThat(gameEngine.calculateWinner(player1, player2)).isEqualTo(player1)
     }
 
     @Test
     internal fun draw() {
-        val player1 = ChoicePlayer("p1", 1, actionReader)
-        val player2 = ChoicePlayer("p2", 1, actionReader)
+        val player1 = ChoicePlayer("p1", 1, actionReader = actionReader)
+        val player2 = ChoicePlayer("p2", 1, actionReader = actionReader)
 
         assertThat(gameEngine.calculateWinner(player1, player2)).isNull()
     }
 
     @Test
     internal fun `player two wins`() {
-        val player1 = ChoicePlayer("p1", 1, actionReader)
-        val player2 = ChoicePlayer("p2", 2, actionReader)
+        val player1 = ChoicePlayer("p1", 1, actionReader = actionReader)
+        val player2 = ChoicePlayer("p2", 2, actionReader = actionReader)
 
         assertThat(gameEngine.calculateWinner(player1, player2)).isEqualTo(player2)
     }

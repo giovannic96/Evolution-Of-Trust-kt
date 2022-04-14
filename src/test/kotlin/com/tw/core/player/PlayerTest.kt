@@ -1,6 +1,5 @@
-package com.tw.core
+package com.tw.core.player
 
-import com.tw.core.player.*
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
@@ -20,7 +19,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `update coin amount`() {
-        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader)
+        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader = actionReader)
 
         player.updateScore(3)
         val expectedAmount = 3
@@ -30,7 +29,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `player one cheats`() {
-        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader)
+        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader = actionReader)
 
         every { actionReader.readAction() } returns Action.CHEAT
 
@@ -39,7 +38,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `player one cooperates`() {
-        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader)
+        val player = ChoicePlayer("console_player", INITIAL_SCORE, actionReader = actionReader)
 
         every { actionReader.readAction() } returns Action.COOPERATE
 
