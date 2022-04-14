@@ -6,7 +6,7 @@ class Machine(
     private val gameEngine: GameEngine,
     private val player1: Player,
     private val player2: Player,
-    private val consolePrinter: ConsolePrinter,
+    private val statsPrinter: StatsPrinter,
 ) {
 
     fun playGame(rounds: Int) {
@@ -19,10 +19,10 @@ class Machine(
             player1.updateScore(points.player1Points)
             player2.updateScore(points.player2Points)
 
-            consolePrinter.displayScore(player1, player2)
+            statsPrinter.displayScore(player1, player2)
         }
 
         val winner = gameEngine.calculateWinner(player1, player2)
-        consolePrinter.displayWinner(winner)
+        statsPrinter.displayWinner(winner)
     }
 }

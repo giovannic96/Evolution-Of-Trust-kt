@@ -1,24 +1,23 @@
 package com.tw.core.game
 
 import com.tw.core.player.Action
-import com.tw.doubles.ConsolePrinterSpy
 import com.tw.doubles.PlayerSpy
+import com.tw.doubles.StatsPrinterSpy
+import com.tw.utils.PlayerConstants.INITIAL_SCORE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-private const val INITIAL_SCORE = 0
 
 internal class MachineTest {
 
     private lateinit var player1: PlayerSpy
     private lateinit var player2: PlayerSpy
     private lateinit var gameEngine: GameEngine
-    private lateinit var consolePrinterSpy: ConsolePrinterSpy
+    private lateinit var consolePrinterSpy: StatsPrinterSpy
 
     @BeforeEach
     internal fun setUp() {
-        consolePrinterSpy = ConsolePrinterSpy()
+        consolePrinterSpy = StatsPrinterSpy()
         player1 = PlayerSpy()
         player2 = PlayerSpy()
         gameEngine = GameEngine()

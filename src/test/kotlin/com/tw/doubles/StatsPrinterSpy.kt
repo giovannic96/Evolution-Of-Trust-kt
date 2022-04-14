@@ -1,9 +1,9 @@
 package com.tw.doubles
 
-import com.tw.core.game.ConsolePrinter
+import com.tw.core.game.StatsPrinter
 import com.tw.core.player.Player
 
-class ConsolePrinterSpy : ConsolePrinter {
+class StatsPrinterSpy : StatsPrinter {
     var displayScoreCounter = 0
     var displayWinnerCounter = 0
     var winnerPlayer: Player? = null

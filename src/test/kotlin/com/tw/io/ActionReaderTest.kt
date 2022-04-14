@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.*
 
-
 internal class ActionReaderTest {
 
     private lateinit var reader: Scanner

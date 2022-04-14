@@ -1,9 +1,9 @@
 package com.tw.io
 
-import com.tw.core.game.ConsolePrinter
+import com.tw.core.game.StatsPrinter
 import com.tw.core.player.Player
 
-class ConsolePrinterImpl : ConsolePrinter {
+class StatsPrinterImpl : StatsPrinter {
 
     override fun displayScore(player1: Player, player2: Player) {
         println()

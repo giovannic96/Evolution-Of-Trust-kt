@@ -2,9 +2,8 @@ package com.tw.doubles
 
 import com.tw.core.player.Action
 import com.tw.core.player.Player
+import com.tw.utils.PlayerConstants.DEFAULT_ACTION
 import java.util.*
-
-private val DEFAULT_ACTION = Action.COOPERATE
 
 class PlayerSpy : Player {
     var actions: Queue<Action> = LinkedList(listOf())

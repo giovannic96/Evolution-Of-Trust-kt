@@ -2,11 +2,14 @@ package com.tw.core.player
 
 class CoolPlayer(
     name: String,
-    score: Int
+    score: Int,
+    private val lastActionWrapper: LastActionWrapper,
 ) :
     AbstractPlayer(name, score) {
 
     override fun doAction(): Action {
-        return Action.COOPERATE
+        val action = Action.COOPERATE
+        lastActionWrapper.setLastAction(action)
+        return action
     }
 }

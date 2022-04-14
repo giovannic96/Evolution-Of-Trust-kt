@@ -1,31 +1,40 @@
 package com.tw
+
 import com.tw.core.game.GameEngine
 import com.tw.core.game.Machine
-import com.tw.core.player.CheatPlayer
-import com.tw.core.player.ChoicePlayer
-import com.tw.core.player.CoolPlayer
+import com.tw.core.player.*
 import com.tw.io.ActionReaderImpl
-import com.tw.io.ConsolePrinterImpl
+import com.tw.io.StatsPrinterImpl
 
 fun main(args: Array<String>) {
     val gameEngine = GameEngine()
-    val consolePrinter = ConsolePrinterImpl()
-    val (player1, player2) = getCoolPlayerAndCheatPlayer()
+    val consolePrinter = StatsPrinterImpl()
+    val (player1, player2) = createCopyPlayerAndCheatPlayer()
     val machine = Machine(gameEngine, player1, player2, consolePrinter)
 
     machine.playGame(3)
 }
 
-private fun getConsolePlayers(): Pair<ChoicePlayer, ChoicePlayer> {
-    val player1 = ChoicePlayer("p1", 0, ActionReaderImpl())
-    val player2 = ChoicePlayer("p2", 0, ActionReaderImpl())
+private fun createConsolePlayers(): Pair<ChoicePlayer, ChoicePlayer> {
+    val lastActionWrapper = LastActionWrapper()
+    val player1 = ChoicePlayer("choice_player1", 0, lastActionWrapper, ActionReaderImpl())
+    val player2 = ChoicePlayer("choice_player2", 0, lastActionWrapper, ActionReaderImpl())
 
     return Pair(player1, player2)
 }
 
-private fun getCoolPlayerAndCheatPlayer(): Pair<CoolPlayer, CheatPlayer> {
-    val player1 = CoolPlayer("p1", 0)
-    val player2 = CheatPlayer("p2", 0)
+private fun createCoolPlayerAndCheatPlayer(): Pair<CoolPlayer, CheatPlayer> {
+    val lastActionWrapper = LastActionWrapper()
+    val player1 = CoolPlayer("cool_player", 0, lastActionWrapper)
+    val player2 = CheatPlayer("cheat_player", 0, lastActionWrapper)
+
+    return Pair(player1, player2)
+}
+
+private fun createCopyPlayerAndCheatPlayer(): Pair<CopyPlayer, CheatPlayer> {
+    val lastActionWrapper = LastActionWrapper()
+    val player1 = CopyPlayer("copy_player", 0, lastActionWrapper)
+    val player2 = CheatPlayer("cheat_player", 0, lastActionWrapper)
 
     return Pair(player1, player2)
 }
