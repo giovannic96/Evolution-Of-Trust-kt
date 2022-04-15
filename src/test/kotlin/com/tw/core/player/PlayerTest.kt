@@ -4,6 +4,7 @@ import com.tw.utils.PlayerConstants.CHEAT_PLAYER_NAME
 import com.tw.utils.PlayerConstants.CHOICE_PLAYER_NAME
 import com.tw.utils.PlayerConstants.COOL_PLAYER_NAME
 import com.tw.utils.PlayerConstants.COPY_PLAYER_NAME
+import com.tw.utils.PlayerConstants.DETECTIVE_PLAYER_NAME
 import com.tw.utils.PlayerConstants.GRUDGE_PLAYER_NAME
 import com.tw.utils.PlayerConstants.INITIAL_SCORE
 import io.mockk.every
@@ -99,5 +100,55 @@ internal class PlayerTest {
         assertThat(grudgePlayer.doAction()).isEqualTo(Action.COOPERATE)
         assertThat(grudgePlayer.doAction()).isEqualTo(Action.CHEAT)
         assertThat(grudgePlayer.doAction()).isEqualTo(Action.CHEAT)
+    }
+
+    @Test
+    internal fun `detective player analyzes then acts like copycat if the other cheated`() {
+        val lastActionWrapper = mockk<LastActionWrapper>()
+        val detectivePlayer = DetectivePlayer(DETECTIVE_PLAYER_NAME, INITIAL_SCORE, lastActionWrapper)
+
+        every { lastActionWrapper.setLastAction(any()) } returns Unit
+        every { lastActionWrapper.getLastAction() } returnsMany listOf(
+            Action.COOPERATE,
+            Action.COOPERATE,
+            Action.CHEAT,
+            Action.COOPERATE,
+            Action.COOPERATE,
+            Action.CHEAT,
+            Action.COOPERATE
+        )
+
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.CHEAT)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.CHEAT)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+    }
+
+    @Test
+    internal fun `detective player analyzes then acts like cheat player if the other never cheated`() {
+        val lastActionWrapper = mockk<LastActionWrapper>()
+        val detectivePlayer = DetectivePlayer(DETECTIVE_PLAYER_NAME, INITIAL_SCORE, lastActionWrapper)
+
+        every { lastActionWrapper.setLastAction(any()) } returns Unit
+        every { lastActionWrapper.getLastAction() } returnsMany listOf(
+            Action.COOPERATE,
+            Action.COOPERATE,
+            Action.COOPERATE,
+            Action.COOPERATE,
+            Action.COOPERATE,
+            Action.CHEAT,
+            Action.COOPERATE
+        )
+
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.CHEAT)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.COOPERATE)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.CHEAT)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.CHEAT)
+        assertThat(detectivePlayer.doAction()).isEqualTo(Action.CHEAT)
     }
 }
