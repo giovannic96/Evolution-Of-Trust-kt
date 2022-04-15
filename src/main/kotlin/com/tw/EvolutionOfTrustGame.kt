@@ -9,7 +9,7 @@ import com.tw.io.StatsPrinterImpl
 fun main(args: Array<String>) {
     val gameEngine = GameEngine()
     val consolePrinter = StatsPrinterImpl()
-    val (player1, player2) = createCopyPlayerAndCheatPlayer()
+    val (player1, player2) = createCopyPlayerAndGrudgePlayer()
     val machine = Machine(gameEngine, player1, player2, consolePrinter)
 
     machine.playGame(3)
@@ -35,6 +35,14 @@ private fun createCopyPlayerAndCheatPlayer(): Pair<CopyPlayer, CheatPlayer> {
     val lastActionWrapper = LastActionWrapper()
     val player1 = CopyPlayer("copy_player", 0, lastActionWrapper)
     val player2 = CheatPlayer("cheat_player", 0, lastActionWrapper)
+
+    return Pair(player1, player2)
+}
+
+private fun createCopyPlayerAndGrudgePlayer(): Pair<CopyPlayer, GrudgePlayer> {
+    val lastActionWrapper = LastActionWrapper()
+    val player1 = CopyPlayer("copy_player", 0, lastActionWrapper)
+    val player2 = GrudgePlayer("grudge_player", 0, lastActionWrapper)
 
     return Pair(player1, player2)
 }
