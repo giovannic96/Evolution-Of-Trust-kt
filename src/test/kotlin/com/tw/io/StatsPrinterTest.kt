@@ -2,7 +2,6 @@ package com.tw.io
 
 import com.tw.core.game.StatsPrinter
 import com.tw.core.player.CoolPlayer
-import com.tw.core.player.LastActionWrapper
 import com.tw.utils.PlayerConstants.COOL_PLAYER_NAME
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -16,21 +15,19 @@ internal class StatsPrinterTest {
     private lateinit var outputStreamCaptor: ByteArrayOutputStream
     private lateinit var standardOut: PrintStream
     private lateinit var statsPrinter: StatsPrinter
-    private lateinit var lastActionWrapper: LastActionWrapper
 
     @BeforeEach
     fun setUp() {
         outputStreamCaptor = ByteArrayOutputStream()
         standardOut = System.out
         statsPrinter = StatsPrinterImpl()
-        lastActionWrapper = LastActionWrapper()
         System.setOut(PrintStream(outputStreamCaptor))
     }
 
     @Test
     internal fun `should display score on standard output`() {
-        val player1 = CoolPlayer(COOL_PLAYER_NAME+"1", 0, lastActionWrapper)
-        val player2 = CoolPlayer(COOL_PLAYER_NAME+"2", 0, lastActionWrapper)
+        val player1 = CoolPlayer(COOL_PLAYER_NAME+"1", 0)
+        val player2 = CoolPlayer(COOL_PLAYER_NAME+"2", 0)
 
         statsPrinter.displayScore(player1, player2)
         val expectedString =
@@ -41,7 +38,7 @@ internal class StatsPrinterTest {
 
     @Test
     internal fun `should display winner sentence when player is not null`() {
-        val player = CoolPlayer(COOL_PLAYER_NAME, 0, lastActionWrapper)
+        val player = CoolPlayer(COOL_PLAYER_NAME, 0)
 
         statsPrinter.displayWinner(player)
         val expectedString = "The winner is ${player.getName()}!"

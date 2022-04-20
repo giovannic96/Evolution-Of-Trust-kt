@@ -3,30 +3,32 @@ package com.tw.core.player
 class GrudgePlayer(
     name: String,
     score: Int,
-    private val lastActionWrapper: LastActionWrapper,
 ) :
     AbstractPlayer(name, score) {
 
+    private var nextAction: Action = Action.COOPERATE
     private var keepCheating = false
-    private var firstTime = true
 
     override fun doAction(): Action {
-        val lastAction = lastActionWrapper.getLastAction() ?: Action.COOPERATE
+        return nextAction
+    }
 
-        if(!keepCheating) {
-            keepCheating = lastAction == Action.CHEAT
+    override fun updateScore(amount: Int) {
+        nextAction = calculateNextAction(amount)
+        super.updateScore(amount)
+    }
+
+    private fun calculateNextAction(roundScore: Int): Action {
+        val opponentLastAction: Action = super.determineOpponentLastActionByRoundScore(roundScore)
+            ?: Action.COOPERATE
+
+        if (!keepCheating) {
+            keepCheating = opponentLastAction == Action.CHEAT
         }
 
-        val action = if(firstTime) {
-            firstTime = false
-            Action.COOPERATE
-        }
-        else if(keepCheating)
+        return if (keepCheating)
             Action.CHEAT
         else
             Action.COOPERATE
-
-        lastActionWrapper.setLastAction(action)
-        return action
     }
 }

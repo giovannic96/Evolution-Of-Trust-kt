@@ -3,7 +3,6 @@ package com.tw.core.game
 import com.tw.core.player.Action
 import com.tw.core.player.ActionReader
 import com.tw.core.player.ChoicePlayer
-import com.tw.core.player.LastActionWrapper
 import com.tw.utils.PlayerConstants.CHOICE_PLAYER_NAME
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
@@ -15,35 +14,33 @@ internal class GameEngineTest {
 
     private lateinit var gameEngine: GameEngine
     private lateinit var actionReader: ActionReader
-    private lateinit var lastActionWrapper: LastActionWrapper
 
     @BeforeEach
     internal fun setUp() {
         gameEngine = GameEngine()
         actionReader = mockk()
-        lastActionWrapper = LastActionWrapper()
     }
 
     @Test
     internal fun `player one wins`() {
-        val player1 = ChoicePlayer(CHOICE_PLAYER_NAME+"1", 2, lastActionWrapper, actionReader)
-        val player2 = ChoicePlayer(CHOICE_PLAYER_NAME+"2", 1, lastActionWrapper, actionReader)
+        val player1 = ChoicePlayer(CHOICE_PLAYER_NAME+"1", 2, actionReader)
+        val player2 = ChoicePlayer(CHOICE_PLAYER_NAME+"2", 1, actionReader)
 
         assertThat(gameEngine.calculateWinner(player1, player2)).isEqualTo(player1)
     }
 
     @Test
     internal fun draw() {
-        val player1 = ChoicePlayer(CHOICE_PLAYER_NAME+"1", 1, lastActionWrapper, actionReader)
-        val player2 = ChoicePlayer(CHOICE_PLAYER_NAME+"2", 1, lastActionWrapper, actionReader)
+        val player1 = ChoicePlayer(CHOICE_PLAYER_NAME+"1", 1, actionReader)
+        val player2 = ChoicePlayer(CHOICE_PLAYER_NAME+"2", 1, actionReader)
 
         assertThat(gameEngine.calculateWinner(player1, player2)).isNull()
     }
 
     @Test
     internal fun `player two wins`() {
-        val player1 = ChoicePlayer(CHOICE_PLAYER_NAME+"1", 1, lastActionWrapper, actionReader)
-        val player2 = ChoicePlayer(CHOICE_PLAYER_NAME+"2", 2, lastActionWrapper, actionReader)
+        val player1 = ChoicePlayer(CHOICE_PLAYER_NAME+"1", 1, actionReader)
+        val player2 = ChoicePlayer(CHOICE_PLAYER_NAME+"2", 2, actionReader)
 
         assertThat(gameEngine.calculateWinner(player1, player2)).isEqualTo(player2)
     }

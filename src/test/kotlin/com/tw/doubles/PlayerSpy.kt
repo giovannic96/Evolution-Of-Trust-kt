@@ -24,4 +24,8 @@ class PlayerSpy : Player {
     override fun updateScore(amount: Int) {
         scores.add(amount)
     }
+
+    override fun determineOpponentLastActionByRoundScore(roundScore: Int): Action? {
+        return null
+    }
 }

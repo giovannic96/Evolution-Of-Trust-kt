@@ -13,11 +13,11 @@ internal class MachineTest {
     private lateinit var player1: PlayerSpy
     private lateinit var player2: PlayerSpy
     private lateinit var gameEngine: GameEngine
-    private lateinit var consolePrinterSpy: StatsPrinterSpy
+    private lateinit var statsPrinterSpy: StatsPrinterSpy
 
     @BeforeEach
     internal fun setUp() {
-        consolePrinterSpy = StatsPrinterSpy()
+        statsPrinterSpy = StatsPrinterSpy()
         player1 = PlayerSpy()
         player2 = PlayerSpy()
         gameEngine = GameEngine()
@@ -25,20 +25,20 @@ internal class MachineTest {
 
     @Test
     internal fun `0 round`() {
-        val machine = Machine(gameEngine, player1, player2, consolePrinterSpy)
+        val machine = Machine(gameEngine, player1, player2, statsPrinterSpy)
 
         machine.playGame(0)
 
-        assertThat(consolePrinterSpy.displayScoreCounter).isEqualTo(0)
-        assertThat(consolePrinterSpy.displayWinnerCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.winnerPlayer).isNull()
+        assertThat(statsPrinterSpy.displayScoreCounter).isEqualTo(0)
+        assertThat(statsPrinterSpy.displayWinnerCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.winnerPlayer).isNull()
         assertThat(player1.scores).isEqualTo(emptyList<Int>())
         assertThat(player2.scores).isEqualTo(emptyList<Int>())
     }
 
     @Test
     internal fun `chat vs cheat should draw with 0 points`() {
-        val machine = Machine(gameEngine, player1, player2, consolePrinterSpy)
+        val machine = Machine(gameEngine, player1, player2, statsPrinterSpy)
 
         player2.actions.add(Action.CHEAT)
         player1.actions.add(Action.CHEAT)
@@ -47,14 +47,14 @@ internal class MachineTest {
 
         assertThat(player1.scores).isEqualTo(listOf(INITIAL_SCORE))
         assertThat(player2.scores).isEqualTo(listOf(INITIAL_SCORE))
-        assertThat(consolePrinterSpy.displayScoreCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.displayWinnerCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.winnerPlayer).isNull()
+        assertThat(statsPrinterSpy.displayScoreCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.displayWinnerCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.winnerPlayer).isNull()
     }
 
     @Test
     internal fun `cheat vs cooperate should win cheat with 3 points`() {
-        val machine = Machine(gameEngine, player1, player2, consolePrinterSpy)
+        val machine = Machine(gameEngine, player1, player2, statsPrinterSpy)
 
         player1.actions.add(Action.CHEAT)
         player2.actions.add(Action.COOPERATE)
@@ -63,14 +63,14 @@ internal class MachineTest {
 
         assertThat(player1.scores).isEqualTo(listOf(3))
         assertThat(player2.scores).isEqualTo(listOf(-1))
-        assertThat(consolePrinterSpy.displayScoreCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.displayWinnerCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.winnerPlayer).isEqualTo(player1)
+        assertThat(statsPrinterSpy.displayScoreCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.displayWinnerCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.winnerPlayer).isEqualTo(player1)
     }
 
     @Test
     internal fun `cooperate vs cheat should loose cooperate with -1 points`() {
-        val machine = Machine(gameEngine, player1, player2, consolePrinterSpy)
+        val machine = Machine(gameEngine, player1, player2, statsPrinterSpy)
 
         player1.actions.add(Action.COOPERATE)
         player2.actions.add(Action.CHEAT)
@@ -79,14 +79,14 @@ internal class MachineTest {
 
         assertThat(player1.scores).isEqualTo(listOf(-1))
         assertThat(player2.scores).isEqualTo(listOf(3))
-        assertThat(consolePrinterSpy.displayScoreCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.displayWinnerCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.winnerPlayer).isEqualTo(player2)
+        assertThat(statsPrinterSpy.displayScoreCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.displayWinnerCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.winnerPlayer).isEqualTo(player2)
     }
 
     @Test
     internal fun `cooperate vs cooperate should draw with 2 points`() {
-        val machine = Machine(gameEngine, player1, player2, consolePrinterSpy)
+        val machine = Machine(gameEngine, player1, player2, statsPrinterSpy)
 
         player1.actions.add(Action.COOPERATE)
         player2.actions.add(Action.COOPERATE)
@@ -95,15 +95,15 @@ internal class MachineTest {
 
         assertThat(player1.scores).isEqualTo(listOf(2))
         assertThat(player2.scores).isEqualTo(listOf(2))
-        assertThat(consolePrinterSpy.displayScoreCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.displayWinnerCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.winnerPlayer).isNull()
+        assertThat(statsPrinterSpy.displayScoreCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.displayWinnerCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.winnerPlayer).isNull()
     }
 
     @Test
     internal fun `multi round`() {
         val numRounds = 2
-        val machine = Machine(gameEngine, player1, player2, consolePrinterSpy)
+        val machine = Machine(gameEngine, player1, player2, statsPrinterSpy)
 
         player1.actions.addAll(listOf(Action.CHEAT, Action.CHEAT))
         player2.actions.addAll(listOf(Action.CHEAT, Action.COOPERATE))
@@ -112,9 +112,9 @@ internal class MachineTest {
 
         assertThat(player1.scores).isEqualTo(listOf(0,3))
         assertThat(player2.scores).isEqualTo(listOf(0,-1))
-        assertThat(consolePrinterSpy.displayScoreCounter).isEqualTo(numRounds)
-        assertThat(consolePrinterSpy.displayWinnerCounter).isEqualTo(1)
-        assertThat(consolePrinterSpy.winnerPlayer).isEqualTo(player1)
+        assertThat(statsPrinterSpy.displayScoreCounter).isEqualTo(numRounds)
+        assertThat(statsPrinterSpy.displayWinnerCounter).isEqualTo(1)
+        assertThat(statsPrinterSpy.winnerPlayer).isEqualTo(player1)
     }
 }
 

@@ -6,4 +6,5 @@ interface Player {
     fun getScore(): Int
     fun doAction(): Action
     fun updateScore(amount: Int)
+    fun determineOpponentLastActionByRoundScore(roundScore: Int): Action?
 }

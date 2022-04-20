@@ -5,30 +5,43 @@ import java.util.*
 class DetectivePlayer(
     name: String,
     score: Int,
-    private val lastActionWrapper: LastActionWrapper,
 ) :
     AbstractPlayer(name, score) {
 
-    private var otherPlayerHasCheated = false
+    private var nextAction: Action? = null
+    private var opponentHasCheated = false
     private var predefinedActions: Queue<Action> =
         LinkedList(listOf(Action.COOPERATE, Action.CHEAT, Action.COOPERATE, Action.COOPERATE))
 
     override fun doAction(): Action {
-        val lastAction = lastActionWrapper.getLastAction() ?: Action.COOPERATE
+        return nextAction ?: predefinedActions.poll()
+    }
 
-        if (!otherPlayerHasCheated && predefinedActions.isNotEmpty())
-            otherPlayerHasCheated = lastAction == Action.CHEAT
+    override fun updateScore(amount: Int) {
+        nextAction = calculateNextAction(amount)
+        super.updateScore(amount)
+    }
 
-        val action = if (predefinedActions.isNotEmpty()) {
+    private fun calculateNextAction(roundScore: Int): Action {
+        val opponentLastAction: Action = super.determineOpponentLastActionByRoundScore(roundScore)
+            ?: Action.COOPERATE
+
+        opponentHasCheated = hasOpponentCheated(opponentLastAction)
+
+        return if (predefinedActions.isNotEmpty()) {
             predefinedActions.poll()
-        } else if (otherPlayerHasCheated) {
-            lastAction
+        } else if (opponentHasCheated) {
+            opponentLastAction
         } else {
             Action.CHEAT
         }
+    }
 
-        lastActionWrapper.setLastAction(action)
-        return action
+    private fun hasOpponentCheated(opponentLastAction: Action): Boolean {
+        return if (!opponentHasCheated && predefinedActions.isNotEmpty())
+            opponentLastAction == Action.CHEAT
+        else
+            false
     }
 }
 

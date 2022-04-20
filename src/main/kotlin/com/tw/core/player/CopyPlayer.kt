@@ -3,22 +3,20 @@ package com.tw.core.player
 class CopyPlayer(
     name: String,
     score: Int,
-    private val lastActionWrapper: LastActionWrapper,
-) :
-    AbstractPlayer(name, score) {
+) : AbstractPlayer(name, score) {
 
-    private var firstTime = true
+    private var nextAction: Action = Action.COOPERATE
 
     override fun doAction(): Action {
-        val lastAction = lastActionWrapper.getLastAction() ?: Action.COOPERATE
+        return nextAction
+    }
 
-        val action = if(firstTime)
-            Action.COOPERATE
-        else
-            lastAction
+    override fun updateScore(amount: Int) {
+        nextAction = calculateNextAction(amount)
+        super.updateScore(amount)
+    }
 
-        firstTime = false
-        lastActionWrapper.setLastAction(action)
-        return action
+    private fun calculateNextAction(roundScore: Int): Action {
+        return super.determineOpponentLastActionByRoundScore(roundScore) ?: Action.COOPERATE
     }
 }

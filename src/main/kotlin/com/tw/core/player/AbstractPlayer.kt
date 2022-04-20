@@ -16,4 +16,12 @@ abstract class AbstractPlayer(
     override fun updateScore(amount: Int) {
         this.score += amount
     }
+
+    override fun determineOpponentLastActionByRoundScore(roundScore: Int): Action? {
+        return when (roundScore) {
+            0, -1 -> Action.CHEAT
+            2, 3 -> Action.COOPERATE
+            else -> null
+        }
+    }
 }
