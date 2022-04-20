@@ -26,7 +26,7 @@ class DetectivePlayer(
         val opponentLastAction: Action = super.determineOpponentLastActionByRoundScore(roundScore)
             ?: Action.COOPERATE
 
-        opponentHasCheated = hasOpponentCheated(opponentLastAction)
+        determineIfOpponentCheated(opponentLastAction)
 
         return if (predefinedActions.isNotEmpty()) {
             predefinedActions.poll()
@@ -37,11 +37,9 @@ class DetectivePlayer(
         }
     }
 
-    private fun hasOpponentCheated(opponentLastAction: Action): Boolean {
-        return if (!opponentHasCheated && predefinedActions.isNotEmpty())
-            opponentLastAction == Action.CHEAT
-        else
-            false
+    private fun determineIfOpponentCheated(opponentLastAction: Action) {
+        if (!opponentHasCheated && predefinedActions.isNotEmpty())
+            opponentHasCheated = opponentLastAction == Action.CHEAT
     }
 }
 
