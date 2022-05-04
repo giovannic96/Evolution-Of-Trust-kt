@@ -1,7 +1,7 @@
 package com.tw.io
 
-import com.tw.core.player.Action
-import com.tw.core.player.ActionReader
+import com.tw.core.action.Action
+import com.tw.core.action.ActionReader
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat

@@ -1,5 +1,7 @@
 package com.tw.core.player
 
+import com.tw.core.action.Action
+
 class CopyPlayer(
     name: String,
     score: Int,

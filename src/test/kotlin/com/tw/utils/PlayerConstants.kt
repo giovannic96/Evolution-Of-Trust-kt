@@ -1,6 +1,6 @@
 package com.tw.utils
 
-import com.tw.core.player.Action
+import com.tw.core.action.Action
 
 object PlayerConstants {
     const val CHOICE_PLAYER_NAME = "choice_player"

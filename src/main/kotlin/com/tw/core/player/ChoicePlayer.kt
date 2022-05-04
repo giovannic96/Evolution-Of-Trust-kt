@@ -1,5 +1,8 @@
 package com.tw.core.player
 
+import com.tw.core.action.Action
+import com.tw.core.action.ActionReader
+
 class ChoicePlayer(
     name: String,
     score: Int,

@@ -1,6 +1,6 @@
 package com.tw.doubles
 
-import com.tw.core.player.Action
+import com.tw.core.action.Action
 import com.tw.core.player.Player
 import com.tw.utils.PlayerConstants.DEFAULT_ACTION
 import java.util.*

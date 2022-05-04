@@ -1,6 +1,6 @@
 package com.tw.core.game
 
-import com.tw.core.player.Action
+import com.tw.core.action.Action
 import com.tw.doubles.PlayerSpy
 import com.tw.doubles.StatsPrinterSpy
 import com.tw.utils.PlayerConstants.INITIAL_SCORE

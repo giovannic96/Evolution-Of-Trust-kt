@@ -1,7 +1,7 @@
 package com.tw.core.game
 
-import com.tw.core.player.Action
-import com.tw.core.player.ActionReader
+import com.tw.core.action.Action
+import com.tw.core.action.ActionReader
 import com.tw.core.player.ChoicePlayer
 import com.tw.utils.PlayerConstants.CHOICE_PLAYER_NAME
 import io.mockk.mockk

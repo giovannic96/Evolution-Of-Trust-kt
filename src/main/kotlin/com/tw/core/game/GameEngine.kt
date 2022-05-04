@@ -1,6 +1,6 @@
 package com.tw.core.game
 
-import com.tw.core.player.Action
+import com.tw.core.action.Action
 import com.tw.core.player.Player
 
 class GameEngine(private val rules: Rules = Rules()) {
